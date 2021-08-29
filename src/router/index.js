@@ -22,8 +22,8 @@ const routes = [
     path: '/daybook',
     name: 'Daybook',
     component: () => import(/* webpackChunkName: "daybook" */ '@/domains/daybook/layouts/DayBookLayout.vue'),
-    children: daybookRoutes
-    // ...daybookRouter
+    children: daybookRoutes // -> Option A Separate only children
+    // ...daybookRouter // -> Option B Separate name, component and children in object
   },
   {
     path: '/:pathMatch(.*)*',
