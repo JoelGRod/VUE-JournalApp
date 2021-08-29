@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 
 // Domains Routers
-import daybookRouter from "../domains/daybook/router";
+import daybookRoutes from "../domains/daybook/router";
 
 const routes = [
   {
@@ -22,7 +22,7 @@ const routes = [
     path: '/daybook',
     name: 'Daybook',
     component: () => import(/* webpackChunkName: "daybook" */ '@/domains/daybook/layouts/DayBookLayout.vue'),
-    children: daybookRouter
+    children: daybookRoutes
     // ...daybookRouter
   },
   {

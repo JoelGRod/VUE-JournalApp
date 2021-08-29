@@ -1,3 +1,3 @@
-const routes = []
+const daybookRoutes = []
 
-export default routes
+export default daybookRoutes
