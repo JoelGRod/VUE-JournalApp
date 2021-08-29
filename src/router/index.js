@@ -27,7 +27,7 @@ const routes = [
   },
   {
     path: '/:pathMatch(.*)*',
-    redirect: { name: 'Daybook' }
+    redirect: { name: 'Home' }
   },
 ]
 

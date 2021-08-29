@@ -19,7 +19,7 @@ export default {
   name: 'Home',
   methods: {
     goToDaybook() {
-      this.$router.push({ name: 'Daybook' })
+      this.$router.push({ name: 'Daybook-No-Entry' })
     }
   },
   components: { }
