@@ -4,9 +4,9 @@ const daybookRoutes = [
         redirect: { name: 'Daybook-No-Entry' }
     },
     {
-        path: 'home',
-        name: 'Daybook-Home',
-        component: () => import(/* webpackChunkName: "daybook-home" */ '../pages/HomePage') 
+        path: 'entry/:id',
+        name: 'Daybook-Entry',
+        component: () => import(/* webpackChunkName: "daybook-entry" */ '../pages/EntryPage')
     },
     {
         path: 'no-entry',

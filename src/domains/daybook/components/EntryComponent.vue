@@ -1,5 +1,7 @@
 <template>
-  <div class="entry-container mb-3 p-2 pointer">
+  <div class="entry-container mb-3 p-2 pointer"
+    @click="$router.push({ name: 'Daybook-Entry', params: { id: 1 } })">
+    
     <!-- Tittle -->
     <div class="entry-title d-flex">
       <span class="text-success fs-5 fw-bold">15</span>
