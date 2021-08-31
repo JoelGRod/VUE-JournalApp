@@ -2,9 +2,9 @@
   <div class="entry-title d-flex justify-content-between p-2">
     <div>
       <!-- TODO -->
-      <span class="text-success fs-3 fw-bold">15</span>
-      <span class="mx-1 fs-3">July</span>
-      <span class="mx-2 fs-4 fw-light">2021, Thursday</span>
+      <span class="text-success fs-3 fw-bold">{{ getDay }}</span>
+      <span class="mx-1 fs-3">{{ getMonth }}</span>
+      <span class="mx-2 fs-4 fw-light">{{ getYearDay }}</span>
     </div>
 
     <div>
@@ -36,6 +36,7 @@
 <script>
 import { defineAsyncComponent } from "@vue/runtime-core";
 import { mapGetters } from "vuex";
+import getDayMonthYear from "../helpers/getDayMonthYear";
 
 export default {
   name: 'entry-page',
@@ -53,12 +54,29 @@ export default {
   methods: {
     loadEntry() {
       const entry = this.getEntryById( this.entryId )
-      if( !entry ) this.$router.push({ name: 'Daybook-No-Entry' })
+      if( entry === undefined ) this.$router.push({ name: 'Daybook-No-Entry' })
       this.entry = entry
     }
   },
   computed: {
     ...mapGetters('daybook', ['getEntryById']),
+    getDay() {
+      const { day } = getDayMonthYear(this.entry.date)
+      return day
+    },
+    getMonth() {
+      const { month } = getDayMonthYear(this.entry.date)
+      return month
+    },
+    getYearDay() {
+      const { yearDay } = getDayMonthYear(this.entry.date)
+      return yearDay
+    },
+  },
+  watch: {
+    entryId() {
+      this.loadEntry()
+    }
   },
   components: {
     FabComponent: defineAsyncComponent(() =>
