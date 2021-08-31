@@ -6,7 +6,10 @@ const daybookRoutes = [
     {
         path: 'entry/:id',
         name: 'Daybook-Entry',
-        component: () => import(/* webpackChunkName: "daybook-entry" */ '../pages/EntryPage')
+        component: () => import(/* webpackChunkName: "daybook-entry" */ '../pages/EntryPage'),
+        props: (route) => {
+            return { entryId: route.params.id }
+        }
     },
     {
         path: 'no-entry',

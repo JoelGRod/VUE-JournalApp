@@ -1,6 +1,7 @@
 <template>
   <div class="entry-title d-flex justify-content-between p-2">
     <div>
+      <!-- TODO -->
       <span class="text-success fs-3 fw-bold">15</span>
       <span class="mx-1 fs-3">July</span>
       <span class="mx-2 fs-4 fw-light">2021, Thursday</span>
@@ -22,7 +23,7 @@
   <FabComponent icon="fa-save"></FabComponent>
 
   <div class="d-flex flex-column px-3 h-75">
-    <textarea class="entry-textarea" placeholder="What's happen?"></textarea>
+    <textarea class="entry-textarea" placeholder="What's happen?" v-model="entry.text"></textarea>
   </div>
 
   <img
@@ -34,13 +35,39 @@
 
 <script>
 import { defineAsyncComponent } from "@vue/runtime-core";
+import { mapGetters } from "vuex";
 
 export default {
+  name: 'entry-page',
+  props: {
+    entryId: {
+      type: String,
+      required: true
+    }
+  },
+  data() {
+    return {
+      entry: null
+    }
+  },
+  methods: {
+    loadEntry() {
+      const entry = this.getEntryById( this.entryId )
+      if( !entry ) this.$router.push({ name: 'Daybook-No-Entry' })
+      this.entry = entry
+    }
+  },
+  computed: {
+    ...mapGetters('daybook', ['getEntryById']),
+  },
   components: {
     FabComponent: defineAsyncComponent(() =>
       import("../components/FabComponent")
     ),
   },
+  created() {
+    this.loadEntry()
+  }
 };
 </script>
 

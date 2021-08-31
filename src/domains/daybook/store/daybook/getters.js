@@ -8,7 +8,11 @@ export default {
             return state.entries.filter( element => element.text.toLowerCase().includes( term.toLowerCase() ))
         }
     },
-    getEntryById(/*state*/) {
-        //TODO
+    getEntryById( state ) {
+        return ( entryId ) => {
+            const entry = state.entries.find( element => element.id.toString() === entryId )
+            if(!entry) return undefined
+            return { ...entry }
+        }
     }
 }
