@@ -54,7 +54,7 @@ export default {
   methods: {
     loadEntry() {
       const entry = this.getEntryById( this.entryId )
-      if( entry === undefined ) this.$router.push({ name: 'Daybook-No-Entry' })
+      if( entry === undefined ) return this.$router.push({ name: 'Daybook-No-Entry' })
       this.entry = entry
     }
   },
