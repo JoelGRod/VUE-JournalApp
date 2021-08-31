@@ -5,14 +5,16 @@
     </div>
 
     <div class="entry-scrollarea px-2 pt-2">
-      <EntryComponent v-for="item in getEntriesByTerm" :key="item.id"></EntryComponent>
+      <EntryComponent v-for="entry in entriesByTerm" :key="entry.id"
+                      :entry="entry">
+      </EntryComponent>
     </div>
   </div>
 </template>
 
 <script>
-import { defineAsyncComponent } from "vue";
-import { mapGetters } from "vuex";
+import { defineAsyncComponent } from "vue"
+import { mapGetters } from "vuex"
 
 export default {
   data() {
@@ -23,12 +25,15 @@ export default {
   computed: {
     ...mapGetters('daybook', { 
       getEntriesByTerm: "getEntriesByTerm"
-    })
+    }),
+    entriesByTerm() {
+      return this.getEntriesByTerm( this.term )
+    }
   },
   components: {
     EntryComponent: defineAsyncComponent(() => import("./EntryComponent")),
   },
-};
+}
 </script>
 
 <style land="scss" scoped>
