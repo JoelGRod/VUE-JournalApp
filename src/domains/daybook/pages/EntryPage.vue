@@ -35,7 +35,7 @@
     />
   </template>
 
-  <FabComponent icon="fa-save"></FabComponent>
+  <FabComponent icon="fa-save" @on:click="saveEntry()"></FabComponent>
   
 </template>
 
@@ -64,6 +64,9 @@ export default {
         return this.$router.push({ name: "Daybook-No-Entry" });
       this.entry = entry;
     },
+    async saveEntry() {
+      console.log('Saving')
+    }
   },
   computed: {
     ...mapGetters("daybook", ["getEntryById"]),

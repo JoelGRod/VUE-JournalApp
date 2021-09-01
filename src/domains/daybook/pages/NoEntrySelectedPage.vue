@@ -3,17 +3,25 @@
     <h1 class="align-self-center">No entry selected</h1>
   </div>
 
-  <FabComponent></FabComponent>
+  <FabComponent @on:click="newEntry()"></FabComponent>
 </template>
 
 <script>
-import { defineAsyncComponent } from '@vue/runtime-core'
+import { defineAsyncComponent } from "@vue/runtime-core";
 
 export default {
-    components: {
-        FabComponent: defineAsyncComponent( () => import('../components/FabComponent') )
-    }
-}
+  name: "no-entry-selected-page",
+  methods: {
+    async newEntry() {
+      console.log("new entry");
+    },
+  },
+  components: {
+    FabComponent: defineAsyncComponent(() =>
+      import("../components/FabComponent")
+    ),
+  },
+};
 </script>
 
 <style lang="scss" scoped>
