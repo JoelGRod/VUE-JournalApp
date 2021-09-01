@@ -5,13 +5,8 @@ export default {
         state.isLoading = false
     },
     updateEntry( state, updatedEntry ) {
-        const updatedEntries = state.entries.map( entry => {
-            if(entry.id === updatedEntry.id) return updatedEntry
-            return entry
-        })
-        console.log(updatedEntries)
-        state.entries = [ ...updatedEntries ]
-        state.isLoading = false
+        const index = state.entries.map( entry => entry.id ).indexOf(updatedEntry.id)
+        state.entries[index] = updatedEntry
     },
     addEntry(/*state*/) {
 

@@ -21,12 +21,8 @@ export default {
         const endpoint = `/entries/${id}.json`
         const body = { date, text, picture }
 
-        const { data } = await firebaseApi.put(endpoint, body)
-        const updatedEntry = {
-            id,
-            ...data
-        }
-        context.commit('updateEntry', {...updatedEntry})
+        await firebaseApi.put(endpoint, body)
+        context.commit('updateEntry', {...entry})
     },
     async createEntry(/*context*/) {
         // TODO
