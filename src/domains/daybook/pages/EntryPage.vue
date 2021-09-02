@@ -9,6 +9,7 @@
 
       <div>
         <button class="btn btn-danger mx-2"
+          v-if="entry.id"
           @click="removeEntry()">
           Delete
           <i class="fa fa-trash-alt"></i>
@@ -88,9 +89,8 @@ export default {
       }
     },
     async removeEntry() {
-      if(this.entryId === 'new') return;
       await this.deleteEntry(this.entryId)
-      // Navigate to no entry selected
+      this.$router.push({ name: 'Daybook-No-Entry' })
     }
   },
   computed: {

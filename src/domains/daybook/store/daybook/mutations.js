@@ -14,7 +14,11 @@ export default {
         state.entries.unshift( entry )
         state.lastMutation = 'addEntry'
     },
-    deleteEntry( /*state, entryId*/ ) {
-        // TODO
+    deleteEntry( state, entryId ) {
+        const newEntries = state.entries.filter( 
+            entry => entry.id !== entryId
+        )
+        state.entries = [ ...newEntries ]
+        state.lastMutation = 'deleteEntry'
     }
 }
