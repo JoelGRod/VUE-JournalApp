@@ -35,5 +35,10 @@ export default {
             ...entry
         })
         return data.name
+    },
+    async deleteEntry( context, entryId ) {
+        const endpoint = `/entries/${entryId}.json`
+        await firebaseApi.delete(endpoint)
+        // delete entry from state with commit
     }
 }

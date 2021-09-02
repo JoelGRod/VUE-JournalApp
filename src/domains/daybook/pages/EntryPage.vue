@@ -8,7 +8,8 @@
       </div>
 
       <div>
-        <button class="btn btn-danger mx-2">
+        <button class="btn btn-danger mx-2"
+          @click="removeEntry()">
           Delete
           <i class="fa fa-trash-alt"></i>
         </button>
@@ -58,7 +59,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions('daybook', ['updateEntry', 'createEntry']),
+    ...mapActions('daybook', 
+      ['updateEntry', 'createEntry', 'deleteEntry']
+    ),
     loadEntry() {
       let entry = {}
 
@@ -83,6 +86,10 @@ export default {
         const id = await this.createEntry(this.entry)
         this.$router.push({ name: 'Daybook-Entry', params: { id } })
       }
+    },
+    async removeEntry() {
+      if(this.entryId === 'new') return;
+      await this.deleteEntry(this.entryId)
     }
   },
   computed: {

@@ -14,4 +14,7 @@ export default {
         state.entries.unshift( entry )
         state.lastMutation = 'addEntry'
     },
+    deleteEntry( /*state, entryId*/ ) {
+        // TODO
+    }
 }
