@@ -90,6 +90,7 @@ export default {
     async removeEntry() {
       if(this.entryId === 'new') return;
       await this.deleteEntry(this.entryId)
+      // Navigate to no entry selected
     }
   },
   computed: {
