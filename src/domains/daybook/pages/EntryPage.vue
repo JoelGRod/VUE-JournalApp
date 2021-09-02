@@ -60,13 +60,28 @@ export default {
   methods: {
     ...mapActions('daybook', ['updateEntry']),
     loadEntry() {
-      const entry = this.getEntryById(this.entryId);
-      if (entry === undefined)
-        return this.$router.push({ name: "Daybook-No-Entry" });
+      let entry = {}
+
+      if( this.entryId === 'new' ) {
+        entry = {
+          date: new Date().getTime(),
+          text: ''
+        }
+      } else {
+        entry = this.getEntryById(this.entryId);
+        if (entry === undefined)
+          return this.$router.push({ name: "Daybook-No-Entry" });
+      }
+
       this.entry = entry;
     },
     async saveEntry() {
-      this.updateEntry(this.entry)
+      if( this.entry.id ) {
+        await this.updateEntry(this.entry)
+        // Confirmation alert
+      } else {
+        console.log('enter new entry')
+      }
     }
   },
   computed: {

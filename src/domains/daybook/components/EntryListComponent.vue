@@ -1,39 +1,56 @@
 <template>
   <div class="entry-list-container">
     <div class="px-2 pt-2">
-      <input type="text" class="form-control" placeholder="Search Entry" v-model="term" />
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search Entry"
+        v-model="term"
+      />
+    </div>
+
+    <div class="mt-2 d-flex flex-column">
+      <button
+        @click="$router.push({ name: 'Daybook-Entry', params: { id: 'new' } })"
+        class="btn btn-primary mx-3">
+        <i class="fa fa-plus-circle"></i>
+        New Entry
+      </button>
     </div>
 
     <div class="entry-scrollarea px-2 pt-2">
-      <EntryComponent v-for="entry in entriesByTerm" :key="entry.id"
-                      :entry="entry">
+      <EntryComponent
+        v-for="entry in entriesByTerm"
+        :key="entry.id"
+        :entry="entry"
+      >
       </EntryComponent>
     </div>
   </div>
 </template>
 
 <script>
-import { defineAsyncComponent } from "vue"
-import { mapGetters } from "vuex"
+import { defineAsyncComponent } from "vue";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
     return {
-      term: ''
-    }
+      term: "",
+    };
   },
   computed: {
-    ...mapGetters('daybook', { 
-      getEntriesByTerm: "getEntriesByTerm"
+    ...mapGetters("daybook", {
+      getEntriesByTerm: "getEntriesByTerm",
     }),
     entriesByTerm() {
-      return this.getEntriesByTerm( this.term )
-    }
+      return this.getEntriesByTerm(this.term);
+    },
   },
   components: {
     EntryComponent: defineAsyncComponent(() => import("./EntryComponent")),
   },
-}
+};
 </script>
 
 <style land="scss" scoped>

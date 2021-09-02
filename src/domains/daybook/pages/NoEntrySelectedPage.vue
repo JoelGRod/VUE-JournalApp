@@ -12,8 +12,8 @@ import { defineAsyncComponent } from "@vue/runtime-core";
 export default {
   name: "no-entry-selected-page",
   methods: {
-    async newEntry() {
-      console.log("new entry");
+    newEntry() {
+      return this.$router.push( { name: 'Daybook-Entry', params: { id: 'new' } })  
     },
   },
   components: {
