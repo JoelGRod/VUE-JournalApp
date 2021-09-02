@@ -58,7 +58,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions('daybook', ['updateEntry']),
+    ...mapActions('daybook', ['updateEntry', 'createEntry']),
     loadEntry() {
       let entry = {}
 
@@ -80,7 +80,7 @@ export default {
         await this.updateEntry(this.entry)
         // Confirmation alert
       } else {
-        console.log('enter new entry')
+        await this.createEntry(this.entry)
       }
     }
   },
