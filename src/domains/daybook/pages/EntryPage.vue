@@ -80,7 +80,8 @@ export default {
         await this.updateEntry(this.entry)
         // Confirmation alert
       } else {
-        await this.createEntry(this.entry)
+        const id = await this.createEntry(this.entry)
+        this.$router.push({ name: 'Daybook-Entry', params: { id } })
       }
     }
   },

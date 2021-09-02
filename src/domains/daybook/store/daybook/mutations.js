@@ -11,7 +11,7 @@ export default {
         state.lastMutation = 'updateEntry'
     },
     addEntry( state, entry ) {
-        state.entries.push( entry )
+        state.entries.unshift( entry )
         state.lastMutation = 'addEntry'
     },
 }

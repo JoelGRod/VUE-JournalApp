@@ -34,5 +34,6 @@ export default {
             id: data.name,
             ...entry
         })
+        return data.name
     }
 }
