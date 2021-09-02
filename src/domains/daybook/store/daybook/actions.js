@@ -5,6 +5,8 @@ export default {
         try {
             const { data } = await firebaseApi.get('/entries.json')
             const entries = []
+            if( !data ) return context.commit('setEntries', entries)
+
             for(let id of Object.keys(data)) {
                 entries.push({
                    id,

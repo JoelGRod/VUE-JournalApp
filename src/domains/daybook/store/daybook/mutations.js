@@ -15,10 +15,9 @@ export default {
         state.lastMutation = 'addEntry'
     },
     deleteEntry( state, entryId ) {
-        const newEntries = state.entries.filter( 
+        state.entries = state.entries.filter( 
             entry => entry.id !== entryId
         )
-        state.entries = [ ...newEntries ]
         state.lastMutation = 'deleteEntry'
     }
 }
