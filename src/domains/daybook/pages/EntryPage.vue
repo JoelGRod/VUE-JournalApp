@@ -8,13 +8,20 @@
       </div>
 
       <div>
+        <input type="file" 
+          @change="selectedImage($event)" 
+          multiple
+          ref="selectImgButton"
+          v-show="false"
+          accept="image/png, image/jpeg">
         <button class="btn btn-danger mx-2"
           v-if="entry.id"
           @click="removeEntry()">
           Delete
           <i class="fa fa-trash-alt"></i>
         </button>
-        <button class="btn btn-primary">
+        <button class="btn btn-primary"
+          @click="selectImage()">
           Upload Image
           <i class="fa fa-upload"></i>
         </button>
@@ -30,8 +37,14 @@
       ></textarea>
     </div>
 
-    <img
+    <!-- <img
       src="https://images.pexels.com/photos/4245826/pexels-photo-4245826.jpeg?cs=srgb&dl=pexels-riccardo-bertolo-4245826.jpg&fm=jpg"
+      alt="entry-photo"
+      class="img-thumbnail entry-img"
+    /> -->
+    <img
+      v-if="localImage"
+      :src="localImage"
       alt="entry-photo"
       class="img-thumbnail entry-img"
     />
@@ -59,6 +72,8 @@ export default {
   data() {
     return {
       entry: null,
+      localImage: null,
+      file: null
     };
   },
   methods: {
@@ -106,6 +121,23 @@ export default {
         this.$router.push({ name: 'Daybook-No-Entry' })
         swal.showSuccess('Deleted', 'The entry has been deleted')
       }
+    },
+    selectedImage(event) {
+      const file = event.target.files[0]
+      if( !file ) {
+        this.localImage = null
+        this.file = null
+        return
+      }
+
+      this.file = file
+
+      const fr = new FileReader()                   // new fr
+      fr.onload = () => this.localImage = fr.result // fr config
+      fr.readAsDataURL( file )                      // load file in fr
+    },
+    selectImage() {
+      this.$refs.selectImgButton.click()
     }
   },
   computed: {
