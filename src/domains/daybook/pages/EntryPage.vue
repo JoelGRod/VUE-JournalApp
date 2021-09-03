@@ -42,9 +42,11 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from "@vue/runtime-core";
-import { mapGetters, mapActions } from "vuex";
-import getDayMonthYear from "../helpers/getDayMonthYear";
+import { defineAsyncComponent } from "@vue/runtime-core"
+import { mapGetters, mapActions } from "vuex"
+import * as swal from '@/infrastructure/shared/services/alertService'
+
+import getDayMonthYear from "../helpers/getDayMonthYear"
 
 export default {
   name: "entry-page",
@@ -80,6 +82,8 @@ export default {
       this.entry = entry;
     },
     async saveEntry() {
+      swal.showLoader()
+
       if( this.entry.id ) {
         await this.updateEntry(this.entry)
         // Confirmation alert
@@ -87,10 +91,21 @@ export default {
         const id = await this.createEntry(this.entry)
         this.$router.push({ name: 'Daybook-Entry', params: { id } })
       }
+
+      swal.showSuccess('Saved', 'The entry has been saved')
     },
     async removeEntry() {
-      await this.deleteEntry(this.entryId)
-      this.$router.push({ name: 'Daybook-No-Entry' })
+      const result = await swal.showDesicion(
+        'Are you Sure?', 
+        'Once deleted it cannot be recovered'
+      )
+
+      if(result) {
+        swal.showLoader()
+        await this.deleteEntry(this.entryId)
+        this.$router.push({ name: 'Daybook-No-Entry' })
+        swal.showSuccess('Deleted', 'The entry has been deleted')
+      }
     }
   },
   computed: {
