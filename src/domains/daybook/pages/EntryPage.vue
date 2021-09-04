@@ -37,11 +37,12 @@
       ></textarea>
     </div>
 
-    <!-- <img
-      src="https://images.pexels.com/photos/4245826/pexels-photo-4245826.jpeg?cs=srgb&dl=pexels-riccardo-bertolo-4245826.jpg&fm=jpg"
+    <img
+      v-if="entry.picture && !localImage"
+      :src="entry.picture"
       alt="entry-photo"
       class="img-thumbnail entry-img"
-    /> -->
+    />
     <img
       v-if="localImage"
       :src="localImage"
@@ -60,6 +61,7 @@ import { mapGetters, mapActions } from "vuex"
 import * as swal from '@/infrastructure/shared/services/alertService'
 
 import getDayMonthYear from "../helpers/getDayMonthYear"
+import uploadImage from "@/infrastructure/shared/services/uploadImage"
 
 export default {
   name: "entry-page",
@@ -82,6 +84,7 @@ export default {
     ),
     loadEntry() {
       let entry = {}
+      this.removeTempImg()
 
       if( this.entryId === 'new' ) {
         entry = {
@@ -99,14 +102,16 @@ export default {
     async saveEntry() {
       swal.showLoader()
 
+      this.entry.picture = await uploadImage( this.file )
+
       if( this.entry.id ) {
         await this.updateEntry(this.entry)
-        // Confirmation alert
       } else {
         const id = await this.createEntry(this.entry)
         this.$router.push({ name: 'Daybook-Entry', params: { id } })
       }
 
+      this.removeTempImg()
       swal.showSuccess('Saved', 'The entry has been saved')
     },
     async removeEntry() {
@@ -125,8 +130,7 @@ export default {
     selectedImage(event) {
       const file = event.target.files[0]
       if( !file ) {
-        this.localImage = null
-        this.file = null
+        this.removeTempImg()
         return
       }
 
@@ -138,6 +142,10 @@ export default {
     },
     selectImage() {
       this.$refs.selectImgButton.click()
+    },
+    removeTempImg() {
+      this.localImage = null
+      this.file = null
     }
   },
   computed: {
