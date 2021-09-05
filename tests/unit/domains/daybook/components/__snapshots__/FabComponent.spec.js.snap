@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing FabComponent.vue should match with the snapshot 1`] = `<button class="btn btn-primary fab-button"><i class="fa fa-2x fa-plus"></i></button>`;
