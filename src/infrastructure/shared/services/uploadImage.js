@@ -1,6 +1,6 @@
 import cloudinaryUploadApi from "../api/cloudinaryApi";
 
-const uploadImage = async( file ) => {
+const uploadImage = async ( file ) => {
     if( !file ) return
 
     try {
