@@ -2,10 +2,10 @@
 
 ## Test
 For cloudinary involved tests you need to:
-- Add in test/unit/cloudinaryConfig.js with this info:
-export const cloud_name = 'your cloud name';
-export const api_key = 'your api_key';
-export const api_secret = 'your api_secret';
+- Create .env.local with this info:
+- CLOUD_NAME=your cloud name
+- API_KEY=your api_key
+- API_SECRET=your api_secret
 
 ## Project setup
 ```

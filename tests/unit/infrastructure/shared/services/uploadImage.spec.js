@@ -1,12 +1,11 @@
 import cloudinary from "cloudinary";
-import * as cloudinaryConfig from '../../../cloudinaryConfig';
 import uploadImage from "@/infrastructure/shared/services/uploadImage";
 import axios from "axios";
 
 cloudinary.config({
-    cloud_name: cloudinaryConfig.cloud_name,
-    api_key: cloudinaryConfig.api_key,
-    api_secret: cloudinaryConfig.api_secret
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
 })
 
 describe('Testing uploadImage', () => {
@@ -26,8 +25,11 @@ describe('Testing uploadImage', () => {
         // Get Id
         const segments = url.split('/');
         const imgId = segments[ segments.length - 1 ].replace('.jpg', '');
-        cloudinary.v2.api.delete_resources( imgId, {}, () => {
-            done(); // Demonstrative purposes, you can use this and not the async/await
+        // cloudinary.v2.api.delete_resources( [ `vue-tests/${imgId}` ], {}, () => {
+        //     done(); // Demonstrative purposes, you can use this and not the async/await
+        // });
+        cloudinary.v2.uploader.destroy( `vue-tests/${imgId}`, {}, () => {
+            done();
         });
     });
 });
