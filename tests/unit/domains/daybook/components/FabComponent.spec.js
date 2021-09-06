@@ -38,7 +38,7 @@ describe('Testing FabComponent.vue', () => {
         const button = wrapper.find('button');
         // Act
         button.trigger('click');
-        console.log(wrapper.emitted());
+        // console.log(wrapper.emitted());
         // Assert
         expect( wrapper.emitted('on:click') ).toBeTruthy();
         expect( wrapper.emitted('on:click') ).toHaveLength(1);  
