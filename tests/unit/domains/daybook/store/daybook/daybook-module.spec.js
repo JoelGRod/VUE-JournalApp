@@ -87,7 +87,9 @@ describe('Vuex - Testing daybook store module', () => {
         // Assert
         expect( lastMutation ).toBe('addEntry');
         expect( entries.length ).toBe(3);
-        expect( entries.find( entry => entry.id === 'ABC-123' ) ).toBeTruthy();
+        expect( 
+            entries.find( entry => entry.id === 'ABC-123' ) )
+            .toBeTruthy();
     });
 
     test('Testing mutations: deleteEntry', () => {
