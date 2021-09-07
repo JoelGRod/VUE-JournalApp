@@ -2,6 +2,13 @@ import { createStore } from 'vuex';
 import daybookStore from "@/domains/daybook/store/daybook";
 import { daybookState } from '../../../../mock-data/test-daybook-store';
 
+/* 
+* WATCH THIS: daybookState.entries is passed by reference!!
+* Because of this deleteEntries depends of addEntry test.
+* If you want to fix this, you need to create your own
+* daybookState for addEntry like i did in setEntries
+*/
+
 const createVuexStore = ( initialState ) => 
     createStore({
        modules: {
