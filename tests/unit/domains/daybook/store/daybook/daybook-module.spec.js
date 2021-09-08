@@ -133,4 +133,31 @@ describe('Vuex - Testing daybook store module', () => {
         expect(store.getters['daybook/getEntryById'](entryId)).toEqual(entry1);
     });
 
+    /* ---------------- Actions ---------------- */
+    test('Testing Actions: loadEntries', async () => {
+        // Arrange
+        const daybookMutationState = { 
+            isLoading: true, 
+            lastMutation: 'none', 
+            entries: [] 
+        };
+        const store = createVuexStore( daybookMutationState );
+        // Act
+        await store.dispatch('daybook/loadEntries');
+        // Assert
+        expect( store.state.daybook.entries.length ).toBeGreaterThanOrEqual(2);
+    });
+
+    test('Testing Actions: updateEntry', () => {
+        
+    });
+
+    test('Testing Actions: createEntry', () => {
+        
+    });
+
+    test('Testing Actions: deleteEntry', () => {
+        
+    });
+
 });
