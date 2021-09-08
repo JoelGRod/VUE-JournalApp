@@ -6,7 +6,8 @@ import { daybookState } from '../../../../mock-data/test-daybook-store';
 * WATCH THIS: daybookState.entries is passed by reference!!
 * Because of this deleteEntries depends of addEntry test.
 * If you want to fix this, you need to create your own
-* daybookState for addEntry like i did in setEntries
+* daybookState for addEntry like i did in setEntries --> Solved
+* fixing the addEntry mutation (see that for more info)
 */
 
 const createVuexStore = ( initialState ) => 
@@ -23,7 +24,7 @@ const createVuexStore = ( initialState ) =>
 
 describe('Vuex - Testing daybook store module', () => {
 
-    // State
+    // /* ---------------- State ---------------- */
     test('should have this initial state', () => {
         // Arrange
         const store = createVuexStore( daybookState );
@@ -34,7 +35,7 @@ describe('Vuex - Testing daybook store module', () => {
         expect( entries ).toEqual( daybookState.entries ); 
     });
 
-    // Mutations
+    // /* ---------------- Mutations ---------------- */
     test('Testing mutations: setEntries ', () => {
         // Arrange
         const daybookMutationState = { 
@@ -95,15 +96,41 @@ describe('Vuex - Testing daybook store module', () => {
     test('Testing mutations: deleteEntry', () => {
         // Arrange
         const store = createVuexStore( daybookState );
+        const deleteId = '-MiklDdpx9Q1PSkn008K';
         // Act
-        const deleteId = 'ABC-123';
         store.commit('daybook/deleteEntry', deleteId);
         const { lastMutation, entries } = store.state.daybook;
         // Assert
         expect( lastMutation ).toBe('deleteEntry');
-        expect( entries.length ).toBe(2);
+        expect( entries.length ).toBe(1);
         expect( 
-            entries.find( entry => entry.id === 'ABC-123') )
+            entries.find( entry => entry.id === deleteId) )
             .toBeFalsy();
     });
+
+    /* ---------------- Getters ---------------- */
+    test('Testing Getters: getEntriesByTerm', () => {
+        // Arrange
+        const store = createVuexStore( daybookState );
+        // Act
+        const term = 'another';
+        // const [ entry1, entry2 ] = store.state.daybook.entries;
+        const [ entry1, entry2 ] = daybookState.entries;
+        // Assert
+        expect(store.getters['daybook/getEntriesByTerm']('').length).toBe(2);
+        expect(store.getters['daybook/getEntriesByTerm'](term).length).toBe(1);
+        expect(store.getters['daybook/getEntriesByTerm'](term)).toEqual([ entry2 ]);
+    });
+
+    test('Testing Getters: getEntryById', () => {
+        // Arrange
+        const store = createVuexStore( daybookState );
+        // Act
+        const entryId = '-MiklDdpx9Q1PSkn008K';
+        // const [ entry1, entry2 ] = store.state.daybook.entries;
+        const [ entry1, entry2 ] = daybookState.entries;
+        // Assert
+        expect(store.getters['daybook/getEntryById'](entryId)).toEqual(entry1);
+    });
+
 });
