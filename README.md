@@ -6,8 +6,8 @@ For cloudinary and firebase involved tests and gral app you need to:
 - CLOUD_NAME=your cloud name
 - API_KEY=your api_key
 - API_SECRET=your api_secret
-- CLOUDINARY_URL_API=https://api.cloudinary.com/v1_1/cloud_name/image/upload
-- FIREBASE_URL_API=your firebase endpoint
+- VUE_APP_CLOUDINARY_URL_API=https://api.cloudinary.com/v1_1/cloud_name/image/upload
+- VUE_APP_FIREBASE_URL_API=your firebase endpoint
 
 ## Project setup
 ```
