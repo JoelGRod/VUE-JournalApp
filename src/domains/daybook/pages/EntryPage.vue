@@ -102,7 +102,9 @@ export default {
     async saveEntry() {
       swal.showLoader()
 
-      this.entry.picture = await uploadImage( this.file )
+      if( this.localImage ){
+        this.entry.picture = await uploadImage( this.file )
+      }
 
       if( this.entry.id ) {
         await this.updateEntry(this.entry)
