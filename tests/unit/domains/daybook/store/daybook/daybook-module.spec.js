@@ -154,7 +154,7 @@ describe('Vuex - Testing daybook store module', () => {
         const updatedEntry = {
             id: '-MiklDdpx9Q1PSkn008K',
             date: 1630758078386,
-            picture: 'https://res.cloudinary.com/do7c3iy3j/image/upload/v1630758299/vue-tests/odv8p7rkeuiqrslqf6ff.jpg',
+            picture: 'https://res.cloudinary.com/do7c3iy3j/image/upload/v1631176217/vue-tests/xvjwymky1olyvqplokag.jpg',
             text: 'Hello world\n\nThis is an updated entry from test\n\nCheers Tests!!',
             anotherData: 'test',
             anotherOneData: 'test test'
@@ -169,17 +169,33 @@ describe('Vuex - Testing daybook store module', () => {
         ).toEqual({
             id: '-MiklDdpx9Q1PSkn008K',
             date: 1630758078386,
-            picture: 'https://res.cloudinary.com/do7c3iy3j/image/upload/v1630758299/vue-tests/odv8p7rkeuiqrslqf6ff.jpg',
+            picture: 'https://res.cloudinary.com/do7c3iy3j/image/upload/v1631176217/vue-tests/xvjwymky1olyvqplokag.jpg',
             text: 'Hello world\n\nThis is an updated entry from test\n\nCheers Tests!!'
         });
     });
 
-    test('Testing Actions: createEntry', () => {
-
+    test('Testing Actions: createEntry & deleteEntry', async () => {
+        // Arrange
+        const store = createVuexStore(daybookState);
+        const newEntry = {
+            date: 1630758078386,
+            text: 'New entry from test'
+        };
+        // Act
+        const entryId = await store.dispatch('daybook/createEntry', newEntry);
+        // Assert
+        expect(typeof entryId).toBe('string');
+        expect(
+            store.state.daybook.entries
+                .find(entry => entry.id === entryId)
+        ).toBeTruthy();
+        
+        // Act
+        await store.dispatch('daybook/deleteEntry', entryId);
+        // Assert
+        expect(
+            store.state.daybook.entries
+                .find(entry => entry.id === entryId)
+        ).toBeFalsy();
     });
-
-    test('Testing Actions: deleteEntry', () => {
-
-    });
-
 });
