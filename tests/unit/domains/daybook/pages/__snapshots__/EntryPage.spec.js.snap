@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing: EntryPage.vue should match with the snapshot 1`] = `
+<div class="entry-title d-flex justify-content-between p-2">
+  <div><span class="text-success fs-3 fw-bold">4</span><span class="mx-1 fs-3">Septiembre</span><span class="mx-2 fs-4 fw-light">2021, Sábado</span></div>
+  <div><input type="file" multiple="" accept="image/png, image/jpeg" style="display: none;"><button class="btn btn-danger mx-2"> Delete <i class="fa fa-trash-alt"></i></button><button class="btn btn-primary"> Upload Image <i class="fa fa-upload"></i></button></div>
+</div>
+<hr>
+<div class="d-flex flex-column px-3 h-75"><textarea class="entry-textarea" placeholder="What's happen?"></textarea></div><img src="https://res.cloudinary.com/do7c3iy3j/image/upload/v1630758299/vue-tests/odv8p7rkeuiqrslqf6ff.jpg" alt="entry-photo" class="img-thumbnail entry-img">
+<!--v-if-->
+<fab-component-stub icon="fa-save"></fab-component-stub>
+`;
