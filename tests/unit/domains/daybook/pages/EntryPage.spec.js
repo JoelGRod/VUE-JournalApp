@@ -162,7 +162,6 @@ describe('Testing: EntryPage.vue', () => {
             );
 
         expect( removeTempImgSpy ).toHaveBeenCalled();
-
         expect( swal.showSuccess )
             .toHaveBeenCalledWith(
                 'Saved', 
