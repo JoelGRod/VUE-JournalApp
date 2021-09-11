@@ -216,6 +216,4 @@ describe('Testing: EntryPage.vue', () => {
                 'The entry has been saved'
             );
     });
-
-    
 });
