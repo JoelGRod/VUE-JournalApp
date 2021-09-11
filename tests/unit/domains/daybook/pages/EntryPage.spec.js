@@ -170,5 +170,53 @@ describe('Testing: EntryPage.vue', () => {
             );
     });
 
+    test('should create a new entry without a new image', async () => {
+        // Arrange
+        const wrapper = shallowMount(EntryPage, {
+            global: {
+                mocks: {
+                    $router: routerMock
+                },
+                plugins: [store],
+                stubs: {
+                    FabComponent
+                }
+            },
+            props: {
+                entryId: 'new'
+            }
+        });
+
+        const removeTempImgSpy = jest.spyOn( wrapper.vm, 'removeTempImg' );
+        // Act
+        await wrapper.find('.btn.btn-primary.fab-button').trigger('click');
+        // Assert
+        expect( swal.showLoader ).toHaveBeenCalled();
+        expect( store.dispatch )
+            .not.toHaveBeenCalledWith(
+                'daybook/uploadImage', null
+            );
+
+        expect( store.dispatch )
+            .toHaveBeenCalledWith(
+                'daybook/createEntry', 
+                wrapper.vm.entry
+            );
+        expect( routerMock.push )
+            .toHaveBeenCalledWith(
+                { 
+                    name: 'Daybook-Entry', 
+                    params: { id: undefined } 
+                }
+            );
+
+        expect( removeTempImgSpy ).toHaveBeenCalled();
+        expect( swal.showSuccess )
+            .toHaveBeenCalledWith(
+                'Saved', 
+                'The entry has been saved'
+            );
+    });
+
     
 });
