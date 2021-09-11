@@ -117,7 +117,7 @@ export default {
       swal.showSuccess('Saved', 'The entry has been saved')
     },
     async removeEntry() {
-      const result = await swal.showDesicion(
+      const result = await swal.showDecision(
         'Are you Sure?', 
         'Once deleted it cannot be recovered'
       )

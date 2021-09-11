@@ -1,7 +1,7 @@
 import Swal from 'sweetalert2'
 
 export const showLoader = () => {
-    new Swal({
+    Swal.fire({
         title: 'Please Wait...',
         allowOutsideClick: false
     })
@@ -16,7 +16,7 @@ export const showError = (title, text) => {
     Swal.fire(title, text, 'error')
 }
 
-export const showDesicion = async ( title, text ) => {
+export const showDecision = async ( title, text ) => {
     const { isConfirmed } = await Swal.fire({
         title,
         text,
