@@ -7,6 +7,7 @@ import { createStore } from "vuex";
 import * as swal from '@/infrastructure/shared/services/alertService'
 
 import EntryPage from "@/domains/daybook/pages/EntryPage";
+import FabComponent from "../../../../../src/domains/daybook/components/FabComponent";
 
 import daybookStore from "@/domains/daybook/store/daybook";
 import { daybookState } from '../../../mock-data/test-daybook-store';
@@ -129,8 +130,40 @@ describe('Testing: EntryPage.vue', () => {
 
     test('should update wrapper id entry without a new image', async () => {
         // Arrange
+        const wrapper = shallowMount(EntryPage, {
+            global: {
+                mocks: {
+                    $router: routerMock
+                },
+                plugins: [store],
+                stubs: {
+                    FabComponent
+                }
+            },
+            props: {
+                entryId: daybookState.entries[0].id
+            }
+        });
+
+        const removeTempImg = jest.spyOn( wrapper.vm, 'removeTempImg' );
         // Act
-        // Assert   
+        await wrapper.find('.btn.btn-primary.fab-button').trigger('click');
+        // Assert
+        expect( swal.showLoader ).toHaveBeenCalled();
+        expect( store.dispatch ).not.toHaveBeenCalledWith('daybook/uploadImage', null);
+
+        expect( store.dispatch )
+            .toHaveBeenCalledWith(
+                'daybook/updateEntry', 
+                daybookState.entries[0]
+            );
+        expect( removeTempImg ).toHaveBeenCalled();
+
+        expect( swal.showSuccess )
+            .toHaveBeenCalledWith(
+                'Saved', 
+                'The entry has been saved'
+            );
     });
 
     
