@@ -1,4 +1,4 @@
-import { shallowMount } from "@vue/test-utils";
+import { shallowMount, mount } from "@vue/test-utils";
 import { createStore } from "vuex";
 
 // Third party library mock
@@ -125,6 +125,12 @@ describe('Testing: EntryPage.vue', () => {
             .toHaveBeenCalledWith(
                 { name: 'Daybook-No-Entry' }
             );
+    });
+
+    test('should update wrapper id entry without a new image', async () => {
+        // Arrange
+        // Act
+        // Assert   
     });
 
     
