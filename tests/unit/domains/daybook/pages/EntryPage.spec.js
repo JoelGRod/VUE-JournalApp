@@ -145,19 +145,23 @@ describe('Testing: EntryPage.vue', () => {
             }
         });
 
-        const removeTempImg = jest.spyOn( wrapper.vm, 'removeTempImg' );
+        const removeTempImgSpy = jest.spyOn( wrapper.vm, 'removeTempImg' );
         // Act
         await wrapper.find('.btn.btn-primary.fab-button').trigger('click');
         // Assert
         expect( swal.showLoader ).toHaveBeenCalled();
-        expect( store.dispatch ).not.toHaveBeenCalledWith('daybook/uploadImage', null);
+        expect( store.dispatch )
+            .not.toHaveBeenCalledWith(
+                'daybook/uploadImage', null
+            );
 
         expect( store.dispatch )
             .toHaveBeenCalledWith(
                 'daybook/updateEntry', 
                 daybookState.entries[0]
             );
-        expect( removeTempImg ).toHaveBeenCalled();
+
+        expect( removeTempImgSpy ).toHaveBeenCalled();
 
         expect( swal.showSuccess )
             .toHaveBeenCalledWith(
