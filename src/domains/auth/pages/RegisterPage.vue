@@ -1,19 +1,20 @@
 <template>
   <span class="login100-form-title p-b-41"> Register </span>
-  <form class="login100-form validate-form p-b-33 p-t-5">
+  <form @submit.prevent="onSubmit" class="login100-form validate-form p-b-33 p-t-5">
 
     <div class="wrap-input100 validate-input" data-validate="Enter username">
-      <input class="input100" type="text" placeholder="Username" required />
+      <input v-model="registerForm.name" class="input100" type="text" placeholder="Username" required />
       <span class="focus-input100" data-placeholder="&#xe82a;"></span>
     </div>
 
     <div class="wrap-input100 validate-input" data-validate="Enter email">
-      <input class="input100" type="text" placeholder="Email" required />
+      <input v-model="registerForm.email" class="input100" type="email" placeholder="Email" required />
       <span class="focus-input100" data-placeholder="&#xe818;"></span>
     </div>
 
     <div class="wrap-input100 validate-input" data-validate="Enter password">
       <input
+        v-model="registerForm.password"
         class="input100"
         type="password"
         placeholder="Password"
@@ -23,7 +24,7 @@
     </div>
 
     <div class="container-login100-form-btn m-t-32">
-      <button class="login100-form-btn">Register</button>
+      <button class="login100-form-btn" type="submit">Register</button>
     </div>
 
     <div class="container-login100-form-btn m-t-32">
@@ -33,5 +34,30 @@
 </template>
 
 <script>
-export default {};
+import { ref } from "vue"
+import useAuth from "../composables/useAuth";
+
+export default {
+
+  setup() {
+
+    const { createUser } = useAuth()
+
+    const registerForm = ref({
+      name: '',
+      email: '',
+      password: ''
+    })
+
+    return {
+      // Public Properties
+      registerForm,
+      // Public methods
+      onSubmit: async() => {
+        createUser( registerForm.value )
+      }
+    }
+
+  }
+};
 </script>
