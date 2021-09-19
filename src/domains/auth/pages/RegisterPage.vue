@@ -53,8 +53,9 @@ export default {
       // Public Properties
       registerForm,
       // Public methods
-      onSubmit: async() => {
-        createUser( registerForm.value )
+      onSubmit: async () => {
+        const resp = await createUser( registerForm.value )
+        console.log(resp)
       }
     }
 
