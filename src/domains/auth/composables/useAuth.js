@@ -9,9 +9,15 @@ const useAuth = () => {
         return resp
     }
 
+    const loginUser = async ( user ) => {
+        const resp = await store.dispatch('auth/loginUser', user)
+        return resp
+    }
+
     return {
         // Public methods
-        createUser
+        createUser,
+        loginUser
     }
 }
 

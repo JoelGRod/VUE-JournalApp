@@ -48,10 +48,10 @@
 
 <script>
 import { ref } from "vue"
-import { useRouter } from "vue-router";
+import { useRouter } from "vue-router"
 import useAuth from "../composables/useAuth"
 
-import { showSuccess ,showError } from "@/infrastructure/shared/services/alertService";
+import { showSuccess ,showError } from "@/infrastructure/shared/services/alertService"
 
 export default {
 
