@@ -2,6 +2,7 @@ import authApi from "../../../infrastructure/shared/api/authApi";
 
 
 export default {
+
     async createUser(context, user) {
         
         const { name, email, password } = user
@@ -35,4 +36,6 @@ export default {
             }
         }
     }
+
+    
 }

@@ -3,12 +3,24 @@
   <form @submit.prevent="onSubmit" class="login100-form validate-form p-b-33 p-t-5">
 
     <div class="wrap-input100 validate-input" data-validate="Enter username">
-      <input v-model="registerForm.name" class="input100" type="text" placeholder="Username" required />
+      <input 
+        v-model="registerForm.name" 
+        class="input100" 
+        type="text" 
+        placeholder="Username" 
+        autocomplete="username"
+        required />
       <span class="focus-input100" data-placeholder="&#xe82a;"></span>
     </div>
 
     <div class="wrap-input100 validate-input" data-validate="Enter email">
-      <input v-model="registerForm.email" class="input100" type="email" placeholder="Email" required />
+      <input 
+        v-model="registerForm.email" 
+        class="input100" 
+        type="email" 
+        placeholder="Email" 
+        autocomplete="username"
+        required />
       <span class="focus-input100" data-placeholder="&#xe818;"></span>
     </div>
 
@@ -18,6 +30,7 @@
         class="input100"
         type="password"
         placeholder="Password"
+        autocomplete="new-password"
         required
       />
       <span class="focus-input100" data-placeholder="&#xe80f;"></span>
@@ -35,12 +48,16 @@
 
 <script>
 import { ref } from "vue"
-import useAuth from "../composables/useAuth";
+import { useRouter } from "vue-router";
+import useAuth from "../composables/useAuth"
+
+import { showSuccess ,showError } from "@/infrastructure/shared/services/alertService";
 
 export default {
 
   setup() {
 
+    const router = useRouter()
     const { createUser } = useAuth()
 
     const registerForm = ref({
@@ -54,8 +71,13 @@ export default {
       registerForm,
       // Public methods
       onSubmit: async () => {
-        const resp = await createUser( registerForm.value )
-        console.log(resp)
+        const { ok, msg } = await createUser( registerForm.value )
+        if( ok ) {
+          showSuccess( 'Congratulations!', 'The user has been created' )
+          return router.push( { name: 'Daybook-No-Entry' } )
+        }
+        
+        showError( 'Something has not gone well', msg )
       }
     }
 
