@@ -4,20 +4,34 @@ import authApi from "../../../infrastructure/shared/api/authApi";
 export default {
     async createUser(context, user) {
         
-        const { email, password } = user
+        const { name, email, password } = user
 
         try {
-            const { data } = await authApi.post(':singUp', { email, password, returnSecureToken: true })
-            console.log(data)
-            // Commit
+            // Create new user
+            const { data } = await authApi.post(
+                ':signUp', 
+                { email, password, returnSecureToken: true }
+            )
+            const { idToken, refreshToken } = data
+            // Add info to new user
+            await authApi.post(
+                ':update', 
+                { idToken, displayName: name }
+            )
+            // Commit Mutation
+            delete user.password
+            context.commit(
+                'loginUser', 
+                { user, idToken, refreshToken }
+            )
+
             return {
                 ok: true
             }
         } catch (error) {
-            console.log(error)
             return {
                 ok: false,
-                msg: '...'
+                msg: error.response.data.error.message
             }
         }
     }
