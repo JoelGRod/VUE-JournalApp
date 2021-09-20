@@ -64,5 +64,44 @@ export default {
                 msg: error.response.data.error.message
             }
         }
+    },
+
+    async checkAuth( context ) {
+
+        const idToken = localStorage.getItem('idToken')
+        const refreshToken = localStorage.getItem('refreshToken')
+
+        if( !idToken ) {
+            context.commit('logout')
+            return { ok: false, msg: 'token not found' }
+        }
+
+        try {
+            // Check Auth
+            const { data } = await authApi.post(
+                ':lookup',
+                { idToken }
+            )
+            const { displayName, email } = data.users[0]
+            // Commit Mutation
+            const user = {
+                name: displayName,
+                email
+            }
+            context.commit(
+                'loginUser', 
+                { user, idToken, refreshToken }
+            )
+
+            return { ok: true }
+
+        } catch (error) {
+            context.commit('logout')
+            return {
+                ok: false,
+                msg: error.response.data.error.message
+            }
+        }
+
     }
 }
