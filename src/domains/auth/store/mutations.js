@@ -1,10 +1,4 @@
 
-// export default {
-//     myMutation(state) {
-
-//     }
-// }
-
 export default {
     loginUser(state, { user, idToken, refreshToken }) {
         if( idToken ) {
