@@ -12,7 +12,10 @@ export default {
 
   setup() {
 
-    const { getAuthStatus, checkAuthStatus } = useAuth()
+    const { 
+      getAuthStatus, 
+      checkAuthStatus 
+    } = useAuth()
 
     checkAuthStatus()
     
