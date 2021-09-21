@@ -33,6 +33,7 @@ export default {
   name: "daybook-layout",
   methods: {
     ...mapActions("daybook", ["loadEntries"]),
+    ...mapMutations("daybook", ["clearEntries"]),
     ...mapMutations("auth", ["logout"]),
     onLogout() {
       this.$router.push( { name: 'Login' } )
@@ -54,6 +55,9 @@ export default {
   created() {
     this.loadEntries();
   },
+  unmounted() {
+    this.clearEntries()
+  }
 };
 </script>
 
