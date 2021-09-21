@@ -102,6 +102,5 @@ export default {
                 msg: error.response.data.error.message
             }
         }
-
     }
 }
