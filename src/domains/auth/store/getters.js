@@ -9,6 +9,9 @@ export default {
 
     currentStatus( state ) {
         return state.status
+    },
+    username( state ) {
+        return state.user?.name || ''
     }
     
 }

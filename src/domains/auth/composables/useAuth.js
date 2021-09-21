@@ -20,13 +20,21 @@ const useAuth = () => {
         return resp
     }
 
+    const logout = () => {
+        store.commit('auth/logout')
+    }
+
     return {
         // Public methods
         createUser,
         loginUser,
         checkAuthStatus,
+        logout,
         getAuthStatus: computed(
             () => store.getters['auth/currentStatus']
+        ),
+        getUsername: computed(
+            () => store.getters['auth/username']
         )
     }
 }

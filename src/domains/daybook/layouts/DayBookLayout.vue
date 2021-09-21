@@ -1,5 +1,8 @@
 <template>
-  <NavbarComponent></NavbarComponent>
+  <NavbarComponent 
+    :userName="username" 
+    @on:logout="onLogout">
+  </NavbarComponent>
   
   <div v-if="isLoading" class="row justify-content-center">
     <div class="col-3 alert-info text-center mt-5">
@@ -22,15 +25,23 @@
 
 <script>
 import { defineAsyncComponent } from "vue";
-import { mapActions, mapState } from "vuex";
+import { 
+  mapActions, mapState, mapMutations, mapGetters 
+} from "vuex";
 
 export default {
   name: "daybook-layout",
   methods: {
     ...mapActions("daybook", ["loadEntries"]),
+    ...mapMutations("auth", ["logout"]),
+    onLogout() {
+      this.$router.push( { name: 'Login' } )
+      this.logout()
+    }
   },
   computed: {
-    ...mapState("daybook", ["isLoading"])
+    ...mapState("daybook", ["isLoading"]),
+    ...mapGetters("auth", ["username"]),
   },
   components: {
     NavbarComponent: defineAsyncComponent(() =>

@@ -9,9 +9,29 @@
         </a>
 
         <div class="d-flex">
-            <button class="btn btn-outline-info mx-2">
+            <a class="navbar-brand text-white">
+            {{ userName }}
+            </a>
+            <button 
+                class="btn btn-outline-info mx-2" 
+                @click="$emit('on:logout')">
                 <i class="fa fa-sign-out-alt"></i>
             </button>
         </div>
     </nav>
 </template>
+
+<script>
+
+export default {
+    name: 'navbar-component',
+    props: {
+        userName: {
+            type: String,
+            required: true,
+            default: 'testing'
+        }
+    },
+    emits: ["on:logout"],
+}
+</script>

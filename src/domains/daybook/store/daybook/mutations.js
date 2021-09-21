@@ -20,5 +20,9 @@ export default {
             entry => entry.id !== entryId
         )
         state.lastMutation = 'deleteEntry'
+    },
+    clearEntries( state ) {
+        state.entries = []
+        state.lastMutation = 'clearEntries'
     }
 }
