@@ -39,7 +39,7 @@ describe('Vuex - Testing daybook store module', () => {
         localStorage.setItem( 'idToken', data.idToken );
     });
 
-    // /* ---------------- State ---------------- */
+    /* ---------------- State ---------------- */
     test('should have this initial state', () => {
         // Arrange
         const store = createVuexStore(daybookState);
@@ -50,7 +50,7 @@ describe('Vuex - Testing daybook store module', () => {
         expect(entries).toEqual(daybookState.entries);
     });
 
-    // /* ---------------- Mutations ---------------- */
+    /* ---------------- Mutations ---------------- */
     test('Testing mutations: setEntries ', () => {
         // Arrange
         const daybookMutationState = {
