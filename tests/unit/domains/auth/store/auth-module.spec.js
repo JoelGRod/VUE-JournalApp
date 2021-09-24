@@ -60,18 +60,19 @@ describe("Vuex - Testing auth store module", () => {
       refreshToken: "zxcvbnm",
     });
 
-    localStorage.setItem('idToken', "abcdefg");
-    localStorage.setItem('refreshToken', "zxcvbnm");
+    localStorage.setItem("idToken", "abcdefg");
+    localStorage.setItem("refreshToken", "zxcvbnm");
     // Act
-    store.commit('auth/logout');
+    store.commit("auth/logout");
     const { status, user, idToken, refreshToken } = store.state.auth;
     // Assert
-    expect(status).toBe("not-authenticated");
-    expect(user).toBeNull();
-    expect(idToken).toBeNull();
-    expect(refreshToken).toBeNull();
-    expect(localStorage.getItem('idToken')).toBeFalsy();
-    expect(localStorage.getItem('refreshToken')).toBeFalsy();
+    expect( status ).toBe( "not-authenticated" );
+    expect( user ).toBeNull();
+    expect( idToken ).toBeNull();
+    expect( refreshToken ).toBeNull();
+
+    expect( localStorage.getItem("idToken") ).toBeFalsy();
+    expect( localStorage.getItem("refreshToken") ).toBeFalsy();
   });
   /* ---------------- Getters ---------------- */
   /* ---------------- Actions ---------------- */
