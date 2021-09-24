@@ -2,6 +2,8 @@ import { createStore } from 'vuex';
 import daybookStore from "@/domains/daybook/store/daybook";
 import { daybookState } from '../../../../mock-data/test-daybook-store';
 
+import authApi from "@/infrastructure/shared/api/authApi";
+
 /* 
 * WATCH THIS: daybookState.entries is passed by reference!!
 * Because of this deleteEntries depends of addEntry test.
@@ -23,6 +25,19 @@ const createVuexStore = (initialState) =>
     })
 
 describe('Vuex - Testing daybook store module', () => {
+
+    beforeAll(async() => {
+        const { data } = await authApi.post(
+            ':signInWithPassword',
+            { 
+                email: 'testing@test.com', 
+                password: '123456', 
+                returnSecureToken: true 
+            }
+        );
+
+        localStorage.setItem( 'idToken', data.idToken );
+    });
 
     // /* ---------------- State ---------------- */
     test('should have this initial state', () => {
