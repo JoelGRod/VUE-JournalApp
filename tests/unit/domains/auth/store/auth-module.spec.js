@@ -1,6 +1,7 @@
 import createVuexStore from "../../../mock-data/mock-store";
 
 describe("Vuex - Testing auth store module", () => {
+
   /* ---------------- State ---------------- */
   test("should have this initial state", () => {
     // Arrange
@@ -66,14 +67,50 @@ describe("Vuex - Testing auth store module", () => {
     store.commit("auth/logout");
     const { status, user, idToken, refreshToken } = store.state.auth;
     // Assert
-    expect( status ).toBe( "not-authenticated" );
-    expect( user ).toBeNull();
-    expect( idToken ).toBeNull();
-    expect( refreshToken ).toBeNull();
+    expect(status).toBe("not-authenticated");
+    expect(user).toBeNull();
+    expect(idToken).toBeNull();
+    expect(refreshToken).toBeNull();
 
-    expect( localStorage.getItem("idToken") ).toBeFalsy();
-    expect( localStorage.getItem("refreshToken") ).toBeFalsy();
+    expect(localStorage.getItem("idToken")).toBeFalsy();
+    expect(localStorage.getItem("refreshToken")).toBeFalsy();
   });
+
   /* ---------------- Getters ---------------- */
+  test("Testing getters: currentStatus ", () => {
+    // Arrange
+    const store = createVuexStore({
+      status: "authenticated", // 'authenticated', 'not-authenticated'. 'authenticating'
+      user: {
+        name: "test user",
+        email: "testuser@test.com",
+      },
+      idToken: "abcdefg",
+      refreshToken: "zxcvbnm",
+    });
+    // Act
+    const currentStatus = store.getters["auth/currentStatus"];
+    // Assert
+    expect(currentStatus).toBe("authenticated");
+  });
+
+  test("Testing getters: username ", () => {
+    // Arrange
+    const store = createVuexStore({
+      status: "authenticated", // 'authenticated', 'not-authenticated'. 'authenticating'
+      user: {
+        name: "test user",
+        email: "testuser@test.com",
+      },
+      idToken: "abcdefg",
+      refreshToken: "zxcvbnm",
+    });
+    // Act
+    const name = store.getters["auth/username"];
+    // Assert
+    expect(name).toBe("test user");
+  });
+
   /* ---------------- Actions ---------------- */
+  
 });
