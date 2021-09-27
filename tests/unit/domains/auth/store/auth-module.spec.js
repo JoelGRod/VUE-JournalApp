@@ -167,4 +167,96 @@ describe("Vuex - Testing auth store module", () => {
     expect( typeof newIdToken ).toBe('string');
     expect( typeof refreshToken ).toBe('string');
   });
+
+  test('Testing actions: checkAuth - Valid idToken', async() => {
+    // Arrange
+    const store = createVuexStore({
+      status: "not-authenticated", // 'authenticated', 'not-authenticated'. 'authenticating'
+      user: null,
+      idToken: null,
+      refreshToken: null,
+    });
+
+    // Login user
+    const user = { email: 'testing@test.com', password: '123456' };
+    await store.dispatch('auth/loginUser', user);
+    const { idToken, refreshToken } = store.state.auth;
+    // Logout user
+    store.commit('auth/logout');
+    // Save id token in local storage
+    localStorage.setItem('idToken', idToken);
+    localStorage.setItem('refreshToken', refreshToken);
+
+    // Act
+    const { ok } = await store.dispatch('auth/checkAuth');
+    const { 
+      status, 
+      user: storeUser, 
+      idToken: newIdToken, 
+      refreshToken: newRefreshToken,
+    } = store.state.auth;
+
+    // Assert
+    expect( ok ).toBeTruthy();
+
+    expect( status ).toBe('authenticated');
+    expect( storeUser ).toMatchObject( 
+      { name: 'testing', email: user.email } 
+    );
+    expect( typeof newIdToken ).toBe( 'string' );
+    expect( typeof newRefreshToken ).toBe( 'string' );
+  });
+
+  test('Testing actions: checkAuth - Invalid IdToken', async() => {
+    // Arrange
+    const store = createVuexStore({
+      status: "not-authenticated", // 'authenticated', 'not-authenticated'. 'authenticating'
+      user: null,
+      idToken: null,
+      refreshToken: null,
+    });
+
+    // Save id token in local storage
+    localStorage.setItem('idToken', 'idToken');
+    localStorage.setItem('refreshToken', 'refreshToken');
+
+    // Act
+    const { ok, msg } = await store.dispatch('auth/checkAuth');
+    const { status, user, idToken, refreshToken } = store.state.auth;
+
+    // Assert
+    expect(ok).toBeFalsy();
+    expect( msg ).toBe('INVALID_ID_TOKEN');
+
+    expect(status).toBe("not-authenticated");
+    expect(user).toBeNull();
+    expect(idToken).toBeNull();
+    expect(refreshToken).toBeNull();
+  });
+
+  test('Testing actions: checkAuth - No IdToken found', async() => {
+    // Arrange
+    const store = createVuexStore({
+      status: "not-authenticated", // 'authenticated', 'not-authenticated'. 'authenticating'
+      user: null,
+      idToken: null,
+      refreshToken: null,
+    });
+
+    localStorage.removeItem('idToken');
+    localStorage.removeItem('refreshToken');
+
+    // Act
+    const { ok, msg } = await store.dispatch('auth/checkAuth');
+    const { status, user, idToken, refreshToken } = store.state.auth;
+
+    // Assert
+    expect( ok ).toBeFalsy();
+    expect( msg ).toBe('token not found');
+
+    expect( status ).toBe('not-authenticated');
+    expect( user ).toBeNull();
+    expect( idToken ).toBeNull();
+    expect( refreshToken ).toBeNull();
+  });
 });
