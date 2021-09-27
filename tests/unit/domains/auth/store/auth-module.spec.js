@@ -1,4 +1,5 @@
 import createVuexStore from "../../../mock-data/mock-store";
+import authApi from "@/infrastructure/shared/api/authApi";
 
 describe("Vuex - Testing auth store module", () => {
   /* ---------------- State ---------------- */
@@ -143,12 +144,27 @@ describe("Vuex - Testing auth store module", () => {
     });
 
     const newUser = { name: 'test user' ,email: "testing2@test.com", password: "123456" };
+
     // Act
     // Delete user
-    await store.dispatch('auth/loginUser', newUser);
+    await store.dispatch('auth/loginUser', { ...newUser });
     const { idToken } = store.state.auth;
-    console.log(idToken);
-    // Use authApi for this TODO!!
-    
+    await authApi.post( ':delete', { idToken } );
+    // Create User
+    const { ok } = await store.dispatch('auth/createUser', newUser);
+    const { 
+      status, user, idToken: newIdToken, refreshToken 
+    } = store.state.auth;
+
+    // Assert
+    expect( ok ).toBeTruthy();
+
+    expect( status ).toBe('authenticated');
+    expect( user ).toMatchObject( {
+      name: newUser.name,
+      email: newUser.email
+    } );
+    expect( typeof newIdToken ).toBe('string');
+    expect( typeof refreshToken ).toBe('string');
   });
 });
