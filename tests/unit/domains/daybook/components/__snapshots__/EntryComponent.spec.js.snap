@@ -11,3 +11,15 @@ exports[`Testing EntryComponent.vue should match with the snapshot 1`] = `
     Cheers</div>
 </div>
 `;
+
+exports[`Testing: EntryComponent.vue should match with the snapshot 1`] = `
+<div class="entry-container mb-3 p-2 pointer">
+  <!-- Tittle -->
+  <div class="entry-title d-flex"><span class="text-success fs-5 fw-bold">4</span><span class="mx-1 fs-5">Septiembre</span><span class="mx-2 fw-light">2021, Sábado</span></div><!-- Entry Description -->
+  <div class="entry-description">Hello world
+
+    This is a test entry
+
+    Cheers</div>
+</div>
+`;
