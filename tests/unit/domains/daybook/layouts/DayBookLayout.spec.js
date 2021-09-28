@@ -1,4 +1,4 @@
-import { shallowMount } from "@vue/test-utils";
+import { shallowMount, RouterView } from "@vue/test-utils";
 
 import DayBookLayout from "@/domains/daybook/layouts/DayBookLayout";
 import createVuexStore from "../../../mock-data/mock-store";
@@ -28,6 +28,9 @@ describe("Testing: DayBookLayout.vue", () => {
         mocks: {
           $router: mockRouter,
         },
+        stubs: {
+          RouterView
+        }
       },
     });
   });

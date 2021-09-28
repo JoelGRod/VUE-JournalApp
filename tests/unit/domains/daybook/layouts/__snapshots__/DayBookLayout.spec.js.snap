@@ -7,7 +7,7 @@ exports[`Testing: DayBookLayout.vue should match with the snapshot 1`] = `
     <entry-list-component-stub></entry-list-component-stub>
   </div>
   <div class="col">
-    <router-view></router-view>
+    <router-view-stub></router-view-stub>
   </div>
 </div>
 `;
