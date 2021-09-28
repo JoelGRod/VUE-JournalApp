@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing: DayBookLayout.vue should match with the snapshot 1`] = `
+<navbar-component-stub username="Testing Store"></navbar-component-stub>
+<div class="d-flex">
+  <div class="col-4">
+    <entry-list-component-stub></entry-list-component-stub>
+  </div>
+  <div class="col">
+    <router-view></router-view>
+  </div>
+</div>
+`;
