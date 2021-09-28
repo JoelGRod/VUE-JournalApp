@@ -36,18 +36,18 @@ describe("Testing: DayBookLayout.vue", () => {
     expect(wrapper.html()).toMatchSnapshot();
   });
 
-//   test("onLogout should close session and redirect", async () => {
-//     // Act
-//     const spyLogout = await jest.spyOn(wrapper.vm, "logout");
-//     await wrapper.vm.onLogout();
-//     // Assert
-//     // expect(store.state.auth).toEqual({
-//     //   user: null,
-//     //   status: "not-authenticated",
-//     //   idToken: null,
-//     //   refreshToken: null,
-//     // });
-//     expect(spyLogout).toHaveBeenCalled();
-//     expect(mockRouter.push).toHaveBeenCalledWith({ name: "Login" });
-//   });
+  // test("onLogout should close session and redirect", async () => {
+  //   // Act
+  //   const spyLogout = await jest.spyOn(wrapper.vm, "logout");
+  //   await wrapper.vm.onLogout();
+  //   // Assert
+  //   // expect(store.state.auth).toEqual({
+  //   //   user: null,
+  //   //   status: "not-authenticated",
+  //   //   idToken: null,
+  //   //   refreshToken: null,
+  //   // });
+  //   expect(spyLogout).toHaveBeenCalled();
+  //   expect(mockRouter.push).toHaveBeenCalledWith({ name: "Login" });
+  // });
 });
