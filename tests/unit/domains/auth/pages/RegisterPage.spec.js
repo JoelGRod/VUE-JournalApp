@@ -1,7 +1,7 @@
 import { shallowMount } from "@vue/test-utils";
 
-import LoginPage from "@/domains/auth/pages/LoginPage";
 import createVuexStore from "../../../mock-data/mock-store";
+import RegisterPage from "@/domains/auth/pages/RegisterPage";
 
 /* ----------- Alert Service Mock ----------- */
 // Third party library mock
@@ -37,7 +37,7 @@ beforeEach(() => {
 config.plugins.VueWrapper.install(VueRouterMock);
 /* ----------- Router Mock Composition API ----------- */
 
-describe("Testing: LoginPage.vue", () => {
+describe("Testing: RegisterPage.vue", () => {
   const store = createVuexStore({
     status: "not-authenticated",
     user: null,
@@ -50,8 +50,7 @@ describe("Testing: LoginPage.vue", () => {
   let wrapper;
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    wrapper = shallowMount(LoginPage, {
+    wrapper = shallowMount(RegisterPage, {
       global: {
         plugins: [store],
       },
@@ -62,40 +61,44 @@ describe("Testing: LoginPage.vue", () => {
     expect(wrapper.html()).toMatchSnapshot();
   });
 
-  test("should show error with incorrect credentials", async () => {
+  test("Should show error if email exists", async () => {
     // Arrange
-    store.dispatch.mockReturnValueOnce({ ok: false, msg: "Error" });
+    store.dispatch.mockReturnValueOnce({ ok: false, msg: "EMAIL_EXISTS" });
     // Act
-    await wrapper.find("form").trigger("submit");
+    await wrapper.find("form.p-t-5").trigger("submit");
     // Assert
-    expect(store.dispatch).toHaveBeenCalledWith("auth/loginUser", {
+    expect(store.dispatch).toHaveBeenCalledWith("auth/createUser", {
+      name: "",
       email: "",
       password: "",
     });
     expect(swal.showError).toHaveBeenCalledWith(
       "Something has not gone well",
-      "Error"
+      "EMAIL_EXISTS"
     );
   });
 
-  test("should redirect with correct credentials", async () => {
+  test("should register user and redirect to daybook module", async () => {
     // Arrange
     store.dispatch.mockReturnValueOnce({ ok: true });
+    const [name, email, password] = wrapper.findAll("input");
     // Act
-    const [email, password] = wrapper.findAll("input");
-    await email.setValue("test@test.com");
+    await name.setValue("test");
+    await email.setValue("test@email.com");
     await password.setValue("123456");
     await wrapper.find("form").trigger("submit");
     // Assert
-    expect(store.dispatch).toHaveBeenCalledWith("auth/loginUser", {
-      email: "test@test.com",
+    expect(store.dispatch).toHaveBeenCalledWith("auth/createUser", {
+      name: "test",
+      email: "test@email.com",
       password: "123456",
     });
+    expect(swal.showSuccess).toHaveBeenCalledWith(
+      "Congratulations!",
+      "The user has been created"
+    );
     expect(wrapper.router.push).toHaveBeenCalledWith({
       name: "Daybook-No-Entry",
     });
-
-    // console.log( wrapper.vm.loginForm );
   });
-
 });
